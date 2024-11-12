@@ -44,10 +44,6 @@ jobs:
           git add generated/
           git commit -m "Update generated code to version ${GITHUB_EVENT_INPUTS_VERSION}"
 
-      - name: Push generated Java code to branch
+      - name: Push generated code to branch
         run: |
-          git push origin HEAD:refs/heads/generated-java --force
-
-      - name: Push generated Rust code to branch
-        run: |
-          git push origin HEAD:refs/heads/generated-rust --force
+          git push origin HEAD:refs/heads/generated --force
