@@ -1,0 +1,53 @@
+name: 📜 Protocol Release
+permissions:
+  "contents": "write"
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release Version'
+        required: true
+        type: string
+      description:
+        description: 'Description Text'
+        required: false
+        type: string
+        default: ""
+
+jobs:
+  generate-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install FlatBuffers Compiler
+        run: |
+          wget -q https://github.com/google/flatbuffers/releases/download/v23.1.21/flatc_linux_x86_64 -O /usr/local/bin/flatc
+          chmod +x /usr/local/bin/flatc
+
+      - name: Generate Java code from FlatBuffers
+        run: |
+          mkdir -p generated/java
+          flatc --java -o generated/java schemas/*.fbs
+
+      - name: Generate Rust code from FlatBuffers
+        run: |
+          mkdir -p generated/rust
+          flatc --rust -o generated/rust schemas/*.fbs
+
+      - name: Commit generated code
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add generated/
+          git commit -m "Update generated code to version ${GITHUB_EVENT_INPUTS_VERSION}"
+
+      - name: Push generated Java code to branch
+        run: |
+          git push origin HEAD:refs/heads/generated-java --force
+
+      - name: Push generated Rust code to branch
+        run: |
+          git push origin HEAD:refs/heads/generated-rust --force

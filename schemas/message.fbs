@@ -1,0 +1,8 @@
+namespace protocol;
+
+table Message {
+  action: string;
+  data: string;
+}
+
+root_type Message;
