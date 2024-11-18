@@ -1,4 +1,4 @@
-# DataTracks Communication Protocol
+# 🚂 DataTracks Communication Protocol
 
 This repository defines the communication protocol for **DataTracks** using **FlatBuffers** for fast, efficient, and cross-platform data serialization.
 
