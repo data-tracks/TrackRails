@@ -40,6 +40,26 @@ jobs:
           mkdir -p generated/rust
           flatc --rust -o generated/rust schemas/*.fbs
 
+      - name: Generate Rust code from FlatBuffers
+        run: |
+          mkdir -p generated/rust
+          flatc --rust -o generated/rust schemas/*.fbs
+
+      - name: Create Cargo.toml for Rust Code
+        run: |
+          cat <<EOL > generated/rust/Cargo.toml
+          [package]
+          name = "generated"
+          version = "${{ github.event.inputs.version }}"
+          edition = "2021"
+
+          [dependencies]
+          flatbuffers = "25.2.10"
+
+          [build-dependencies]
+          flatbuffers = "25.2.10"
+          EOL
+
       - name: Commit generated code
         run: |
           git config --local user.name "GitHub Actions"
