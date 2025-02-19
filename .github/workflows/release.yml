@@ -49,4 +49,4 @@ jobs:
 
       - name: Push generated code to branch
         run: |
-          git push origin HEAD:refs/heads/main --force
+          git push origin HEAD:refs/heads/generated --force
