@@ -55,9 +55,19 @@ jobs:
 
           [dependencies]
           flatbuffers = "25.2.10"
+          
+          [lib]
+          path = "src/lib.rs" 
 
           [build-dependencies]
           flatbuffers = "25.2.10"
+          EOL
+
+      - name: Create lib.rs for Rust code
+        run: |
+          mkdir -p generated/rust/src
+          cat <<EOL > generated/rust/src/lib.rs
+          pub mod message_generated;
           EOL
 
       - name: Commit generated code
