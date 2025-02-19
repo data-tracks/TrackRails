@@ -37,13 +37,8 @@ jobs:
 
       - name: Generate Rust code from FlatBuffers
         run: |
-          mkdir -p generated/rust
+          mkdir -p generated/rust/src
           flatc --rust -o generated/rust/src/ schemas/*.fbs
-
-      - name: Generate Rust code from FlatBuffers
-        run: |
-          mkdir -p generated/rust
-          flatc --rust -o generated/rust schemas/*.fbs
 
       - name: Create Cargo.toml for Rust Code
         run: |
