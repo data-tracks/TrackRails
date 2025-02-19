@@ -44,7 +44,7 @@ jobs:
         run: |
           cat <<EOL > generated/rust/Cargo.toml
           [package]
-          name = "generated"
+          name = "schemas"
           version = "0.0.1"
           edition = "2021"
 
