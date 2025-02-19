@@ -38,7 +38,7 @@ jobs:
       - name: Generate Rust code from FlatBuffers
         run: |
           mkdir -p generated/rust
-          flatc --rust -o generated/rust schemas/*.fbs
+          flatc --rust -o generated/rust/src/ schemas/*.fbs
 
       - name: Generate Rust code from FlatBuffers
         run: |
