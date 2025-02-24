@@ -6,3 +6,12 @@ table Message {
 }
 
 root_type Message;
+
+
+
+table Command {
+    action: string;
+    data: string;
+}
+
+root_type Command;
