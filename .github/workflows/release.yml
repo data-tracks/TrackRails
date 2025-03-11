@@ -34,6 +34,12 @@ jobs:
         run: |
           mkdir -p generated/java
           flatc --java -o generated/java schemas/*.fbs
+          
+
+      - name: Generate TypeScript code from FlatBuffers
+        run: |
+          mkdir -p generated/ts/src
+          flatc --ts -o generated/ts/src/ schemas/*.fbs
 
       - name: Generate Rust code from FlatBuffers
         run: |
