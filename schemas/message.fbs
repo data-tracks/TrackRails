@@ -1,19 +1,12 @@
 namespace protocol;
 
 
-union Payload {
-    Create,
-    Get,
-    Values,
+union CreateType {
+    CreatePlan
 }
-
 
 table Create {
     create_type: CreateType;
-}
-
-union CreateType {
-    CreatePlan
 }
 
 table CreatePlan {
@@ -21,13 +14,16 @@ table CreatePlan {
     plan: string;
 }
 
-table Get {
-    get_type: GetType;
+table ByName {
+    name: string;
 }
 
-union GetType {
-    GetPlans,
-    GetPlan
+union FilterType {
+    ByName,
+}
+
+table Filter {
+    filter_type: FilterType;
 }
 
 table GetPlans {
@@ -38,39 +34,27 @@ table GetPlan {
     id: ulong;
 }
 
-table Filter {
-    filter_type: FilterType;
-}
-
-union FilterType {
-    ByName,
-}
-
-table ByName {
-    name: string;
+union GetType {
+    GetPlans,
+    GetPlan
 }
 
 
-table Plans {
-    plans: [Plan];
+
+table Get {
+    get_type: GetType;
 }
+
+
 
 table Plan {
     name: string;
     template: string;
 }
 
-table Values {
-    values: [Value];
-}
 
-union Value {
-    Null,
-    String,
-    Integer,
-    Float,
-    List,
-    Document
+table Plans {
+    plans: [Plan];
 }
 
 table Null {}
@@ -91,13 +75,34 @@ table List {
     data: [Value];
 }
 
+table KeyValue {
+    key: Value;
+    values: Value;
+}
+
 table Document {
     data: [KeyValue];
 }
 
-table KeyValue {
-    key: Value;
-    values: Value;
+
+union Value {
+    Null,
+    String,
+    Integer,
+    Float,
+    List,
+    Document
+}
+
+
+table Values {
+    values: [Value];
+}
+
+union Payload {
+    Create,
+    Get,
+    Values,
 }
 
 
