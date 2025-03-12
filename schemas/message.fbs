@@ -1,6 +1,4 @@
 namespace protocol;
-
-
 union CreateType {
     CreatePlan
 }
@@ -57,6 +55,15 @@ table Plans {
     plans: [Plan];
 }
 
+union Value {
+    Null,
+    String,
+    Integer,
+    Float,
+    List,
+    Document
+}
+
 table Null {}
 
 table String {
@@ -71,8 +78,12 @@ table Float {
     data: float;
 }
 
+table ValueWrapper {
+    data: Value;
+}
+
 table List {
-    data: [Value];
+    data: [ValueWrapper];
 }
 
 table KeyValue {
@@ -85,18 +96,8 @@ table Document {
 }
 
 
-union Value {
-    Null,
-    String,
-    Integer,
-    Float,
-    List,
-    Document
-}
-
-
 table Values {
-    values: [Value];
+    values: [ValueWrapper];
 }
 
 union Payload {
