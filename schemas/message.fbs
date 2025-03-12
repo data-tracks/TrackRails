@@ -10,10 +10,15 @@ root_type Message;
 union Payload {
     Create,
     Get,
-    Values
+    Values,
 }
 
-union Create {
+
+table Create {
+    create_type: CreateType;
+}
+
+union CreateType {
     CreatePlan
 }
 
@@ -22,7 +27,11 @@ table CreatePlan {
     plan: string;
 }
 
-union Get {
+table Get {
+    get_type: GetType;
+}
+
+union GetType {
     GetPlans,
     GetPlan
 }
@@ -35,7 +44,11 @@ table GetPlan {
     id: ulong;
 }
 
-union Filter {
+table Filter {
+    filter_type: FilterType;
+}
+
+union FilterType {
     ByName,
 }
 
