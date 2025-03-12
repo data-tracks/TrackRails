@@ -1,17 +1,95 @@
 namespace protocol;
 
 table Message {
-  action: string;
-  data: string;
+  data: Payload;
 }
 
 root_type Message;
 
 
+union Payload {
+    Create,
+    Get,
+    Values
+}
 
-table Command {
-    action: string;
+union Create {
+    CreatePlan
+}
+
+table CreatePlan {
+    name: string;
+    plan: string;
+}
+
+union Get {
+    GetPlans,
+    GetPlan
+}
+
+table GetPlans {
+    name: Filter;
+}
+
+table GetPlan {
+    id: ulong;
+}
+
+union Filter {
+    ByName,
+}
+
+table ByName {
+    name: string;
+}
+
+
+table Plans {
+    plans: [Plan];
+}
+
+table Plan {
+    name: string;
+    template: string;
+}
+
+table Values {
+    values: [Value];
+}
+
+union Value {
+    Null,
+    String,
+    Integer,
+    Float,
+    List,
+    Document
+}
+
+table Null {}
+
+table String {
     data: string;
 }
 
-root_type Command;
+table Integer {
+    data: ulong;
+}
+
+table Float {
+    data: float;
+}
+
+table List {
+    data: [Value];
+}
+
+table Document {
+    data: [KeyValue];
+}
+
+table KeyValue {
+    key: Value;
+    values: Value;
+}
+
