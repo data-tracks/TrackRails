@@ -1,11 +1,5 @@
 namespace protocol;
 
-table Message {
-  data: Payload;
-}
-
-root_type Message;
-
 
 union Payload {
     Create,
@@ -106,3 +100,9 @@ table KeyValue {
     values: Value;
 }
 
+
+table Message {
+  data: Payload;
+}
+
+root_type Message;
