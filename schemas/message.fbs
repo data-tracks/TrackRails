@@ -100,6 +100,10 @@ table Values {
     values: [ValueWrapper];
 }
 
+table Status {
+    msg: String;
+}
+
 union Payload {
     Create,
     Get,
@@ -109,6 +113,7 @@ union Payload {
 
 table Message {
   data: Payload;
+  status: Status;
 }
 
 root_type Message;
