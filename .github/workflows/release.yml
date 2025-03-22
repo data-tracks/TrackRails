@@ -40,6 +40,24 @@ jobs:
         run: |
           mkdir -p generated/ts/src
           flatc --ts -o generated/ts/src/ schemas/*.fbs
+          
+            - name: Create Cargo.toml for Rust Code
+
+      - name: Create package.json
+        run: |
+          cat <<EOL > package.json
+          {
+            "name": "TrackRails",
+            "version": "1.0.0",
+            "description": "TrackRails TypeScript for DataTracks",
+            "main": "generated/ts/src/protocol.ts",
+            "types": "generated/ts/src/protocol.ts",
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/data-tracks/DataTracks-Protocol.git"
+            },
+            "license": "GPLv3"
+          }
 
       - name: Generate Rust code from FlatBuffers
         run: |
