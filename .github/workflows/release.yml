@@ -45,7 +45,7 @@ jobs:
         run: |
           cat <<EOL > package.json
           {
-            "name": "TrackRails",
+            "name": "trackrails",
             "version": "1.0.0",
             "description": "TrackRails TypeScript for DataTracks",
             "main": "generated/ts/src/protocol.ts",
