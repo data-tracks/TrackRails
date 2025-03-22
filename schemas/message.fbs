@@ -101,13 +101,17 @@ table Values {
 }
 
 table Status {
-    msg: String;
+    msg: string;
+}
+table Query {
+    query: string;
 }
 
 union Payload {
     Create,
     Get,
     Values,
+    Query
 }
 
 
