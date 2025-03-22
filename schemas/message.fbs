@@ -3,6 +3,10 @@ union CreateType {
     CreatePlan
 }
 
+table Register{
+    id: long = null;
+}
+
 table Create {
     create_type: CreateType;
 }
@@ -37,12 +41,13 @@ union GetType {
     GetPlan
 }
 
-
-
 table Get {
     get_type: GetType;
 }
 
+table Catalog{
+    plans: Plans;
+}
 
 
 table Plan {
@@ -107,7 +112,9 @@ table Status {
 union Payload {
     Create,
     Get,
-    Values
+    Values,
+    Catalog,
+    Register
 }
 
 
