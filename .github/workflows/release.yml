@@ -40,8 +40,6 @@ jobs:
         run: |
           mkdir -p generated/ts/src
           flatc --ts -o generated/ts/src/ schemas/*.fbs
-          
-            - name: Create Cargo.toml for Rust Code
 
       - name: Create package.json
         run: |
