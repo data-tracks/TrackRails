@@ -103,15 +103,11 @@ table Values {
 table Status {
     msg: string;
 }
-table Query {
-    query: string;
-}
 
 union Payload {
     Create,
     Get,
-    Values,
-    Query
+    Values
 }
 
 
