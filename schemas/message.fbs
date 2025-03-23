@@ -5,6 +5,7 @@ union CreateType {
 
 table Register{
     id: long = null;
+    catalog: Catalog = null;
 }
 
 table Create {
@@ -99,7 +100,6 @@ table KeyValue {
 table Document {
     data: [KeyValue];
 }
-
 
 table Values {
     values: [ValueWrapper];
