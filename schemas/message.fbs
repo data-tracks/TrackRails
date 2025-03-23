@@ -5,7 +5,7 @@ union CreateType {
 
 table Register{
     id: long = null;
-    catalog: Catalog = null;
+    catalog: Catalog;
 }
 
 table Create {
