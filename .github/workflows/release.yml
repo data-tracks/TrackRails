@@ -39,7 +39,7 @@ jobs:
       - name: Generate TypeScript code from FlatBuffers
         run: |
           mkdir -p generated/ts/src
-          flatc --ts -o generated/ts/src/ schemas/*.fbs
+          flatc --ts -o generated/ts/src/ schemas/*.fbs --gen-object-api
 
       - name: Create package.json
         run: |
