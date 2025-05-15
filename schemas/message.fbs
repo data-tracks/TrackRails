@@ -67,10 +67,15 @@ union Value {
     Integer,
     Float,
     List,
-    Document
+    Document,
+    Time
 }
 
 table Null {}
+
+table Time {
+    data: ulong;
+}
 
 table String {
     data: string;
@@ -101,8 +106,10 @@ table Document {
     data: [KeyValue];
 }
 
-table Values {
+table Train {
     values: [ValueWrapper];
+    topic: string;
+    event_time: Time;
 }
 
 table Status {
@@ -112,7 +119,7 @@ table Status {
 union Payload {
     Create,
     Get,
-    Values,
+    Train,
     Catalog,
     Register
 }
