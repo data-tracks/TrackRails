@@ -77,7 +77,7 @@ table Time {
     data: ulong;
 }
 
-table String {
+table Text {
     data: string;
 }
 
