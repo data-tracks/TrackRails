@@ -116,12 +116,22 @@ table Status {
     msg: string;
 }
 
+table Bind {
+    id: ulong;
+}
+
+table Unbind {
+    id: ulong;
+}
+
 union Payload {
     Create,
     Get,
     Train,
     Catalog,
-    Register
+    Register,
+    Bind,
+    Unbind
 }
 
 
