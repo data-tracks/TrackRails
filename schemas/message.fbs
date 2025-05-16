@@ -63,7 +63,7 @@ table Plans {
 
 union Value {
     Null,
-    String,
+    Text,
     Integer,
     Float,
     List,
