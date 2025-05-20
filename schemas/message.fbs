@@ -98,6 +98,7 @@ enum PlanStatus : byte {
 table Plan {
   id:ulong;
   name:string;
+  template:string;
 
   lines:[KeyValueU64VecU64];
   stations:[KeyValueU64Station];
