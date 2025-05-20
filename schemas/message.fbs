@@ -56,7 +56,21 @@ table Station {
   stop:ulong;
   block: [ulong];
   inputs: [ulong];
+}
 
+table LanguageTransform {
+    language: string;
+    query: string;
+}
+
+enum TransformType{
+    LanguageTransform
+}
+
+table Transform {
+  name:string;
+  type: [TranformType];
+  // Add fields relevant to your `transform::Transform`
 }
 
 
@@ -155,13 +169,13 @@ table Status {
 }
 
 table Bind {
-    planId: ulong;
-    stopId: ulong;
+    plan_id: ulong;
+    stop_id: ulong;
 }
 
 table Unbind {
-    planId: ulong;
-    stopId: ulong;
+    plan_id: ulong;
+    stop_id: ulong;
 }
 
 union Payload {
