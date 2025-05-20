@@ -75,7 +75,7 @@ table Transform {
 
 table KeyValueU64VecU64 {
   key:ulong;
-  value:ulong;
+  value:[ulong];
 }
 
 table KeyValueU64Station {
