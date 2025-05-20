@@ -69,7 +69,7 @@ union TransformType{
 
 table Transform {
   name:string;
-  type: TranformType;
+  type: TransformType;
 }
 
 
