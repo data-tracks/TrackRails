@@ -76,7 +76,7 @@ table KeyValueStringTransform {
   value:Transform;
 }
 
-enum Status : byte {
+enum PlanStatus : byte {
   Running,
   Stopped,
   Error
@@ -90,7 +90,7 @@ table Plan {
   stations:[KeyValueU64Station];
   stations_to_in_outs:[KeyValueU64VecU64];
 
-  status:Status;
+  status:PlanStatus;
   transforms:[KeyValueStringTransform];
 }
 
