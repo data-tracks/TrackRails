@@ -89,6 +89,26 @@ table KeyValueStringTransform {
   value:Transform;
 }
 
+table Source {
+    id: ulong;
+    name: string;
+}
+
+table Destination {
+    id: ulong;
+    name: string;
+}
+
+table KeyValueU64Source {
+  key:ulong;
+  value:Source;
+}
+
+table KeyValueU64Destination {
+  key:ulong;
+  value:Destination;
+}
+
 enum PlanStatus : byte {
   Running,
   Stopped,
@@ -103,6 +123,9 @@ table Plan {
   lines:[KeyValueU64VecU64];
   stations:[KeyValueU64Station];
   stations_to_in_outs:[KeyValueU64VecU64];
+
+  sources: [KeyValueU64Source];
+  destinations: [KeyValueU64Destination];
 
   status:PlanStatus;
   transforms:[KeyValueStringTransform];
