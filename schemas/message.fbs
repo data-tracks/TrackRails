@@ -63,7 +63,7 @@ table LanguageTransform {
     query: string;
 }
 
-enum TransformType{
+union TransformType{
     LanguageTransform
 }
 
