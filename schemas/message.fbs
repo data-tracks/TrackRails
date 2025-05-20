@@ -51,9 +51,47 @@ table Catalog{
 }
 
 
+table Station {
+  id:ulong;
+  stop:ulong;
+  block: [ulong];
+  inputs: [ulong];
+
+}
+
+
+table KeyValueU64VecU64 {
+  key:ulong;
+  value:[ulong];
+}
+
+table KeyValueU64Station {
+  key:ulong;
+  value:Station;
+}
+
+
+table KeyValueStringTransform {
+  key:string;
+  value:Transform;
+}
+
+enum Status : byte {
+  Running,
+  Stopped,
+  Error
+}
+
 table Plan {
-    name: string;
-    template: string;
+  id:ulong;
+  name:string;
+
+  lines:[KeyValueU64VecU64];
+  stations:[KeyValueU64Station];
+  stations_to_in_outs:[KeyValueU64VecU64];
+
+  status:Status;
+  transforms:[KeyValueStringTransform];
 }
 
 
