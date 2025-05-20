@@ -69,14 +69,13 @@ union TransformType{
 
 table Transform {
   name:string;
-  type: [TranformType];
-  // Add fields relevant to your `transform::Transform`
+  type: TranformType;
 }
 
 
 table KeyValueU64VecU64 {
   key:ulong;
-  value:[ulong];
+  value:ulong;
 }
 
 table KeyValueU64Station {
