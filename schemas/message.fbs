@@ -93,11 +93,13 @@ table KeyValueStringTransform {
 table Source {
     id: ulong;
     name: string;
+    type: string;
 }
 
 table Destination {
     id: ulong;
     name: string;
+    type: string;
 }
 
 table KeyValueU64Source {
