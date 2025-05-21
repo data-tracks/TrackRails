@@ -54,6 +54,7 @@ table Catalog{
 table Station {
   id:ulong;
   stop:ulong;
+  transform: Transform;
   block: [ulong];
   inputs: [ulong];
 }
