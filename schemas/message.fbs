@@ -153,7 +153,7 @@ union Value {
 table Null {}
 
 table Time {
-    data: ulong;
+    data: long;
 }
 
 table Bool {
@@ -165,7 +165,7 @@ table Text {
 }
 
 table Integer {
-    data: ulong;
+    data: long;
 }
 
 table Float {
