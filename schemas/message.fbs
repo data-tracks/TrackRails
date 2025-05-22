@@ -142,6 +142,7 @@ table Plans {
 union Value {
     Null,
     Text,
+    Bool,
     Integer,
     Float,
     List,
@@ -153,6 +154,10 @@ table Null {}
 
 table Time {
     data: ulong;
+}
+
+table Bool {
+    data: bool;
 }
 
 table Text {
