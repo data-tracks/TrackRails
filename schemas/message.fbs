@@ -1,6 +1,6 @@
 namespace protocol;
 union CreateType {
-    CreatePlan
+    CreatePlanRequest
 }
 
 table Register{
@@ -12,7 +12,12 @@ table Create {
     create_type: CreateType;
 }
 
-table CreatePlan {
+table CreatePlanRequest {
+    name: string;
+    plan: string;
+}
+
+table CreatePlanResponse {
     name: string;
     plan: string;
 }
@@ -86,30 +91,30 @@ table KeyValueU64Station {
 
 
 table KeyValueStringTransform {
-  key:string;
-  value:Transform;
+  key: string (required);
+  value: Transform (required);
 }
 
 table Source {
-    id: ulong;
-    name: string;
-    type: string;
+    id: ulong (required);
+    name: string (required);
+    type: string (required);
 }
 
 table Destination {
-    id: ulong;
-    name: string;
-    type: string;
+    id: ulong (required);
+    name: string (required);
+    type: string (required);
 }
 
 table KeyValueU64Source {
-  key:ulong;
-  value:Source;
+  key: ulong (required);
+  value: Source (required);
 }
 
 table KeyValueU64Destination {
-  key:ulong;
-  value:Destination;
+  key: ulong (required);
+  value: Destination (required);
 }
 
 enum PlanStatus : byte {
@@ -136,7 +141,7 @@ table Plan {
 
 
 table Plans {
-    plans: [Plan];
+    plans: [Plan] (required);
 }
 
 union Value {
@@ -153,23 +158,23 @@ union Value {
 table Null {}
 
 table Time {
-    data: long;
+    data: long (required);
 }
 
 table Bool {
-    data: bool;
+    data: bool (required);
 }
 
 table Text {
-    data: string;
+    data: string (required);
 }
 
 table Integer {
-    data: long;
+    data: long (required);
 }
 
 table Float {
-    data: float;
+    data: float (required);
 }
 
 table ValueWrapper {
@@ -177,16 +182,16 @@ table ValueWrapper {
 }
 
 table List {
-    data: [ValueWrapper];
+    data: [ValueWrapper] (required);
 }
 
 table KeyValue {
-    key: Value;
-    values: Value;
+    key: Value (required);
+    values: Value (required);
 }
 
 table Document {
-    data: [KeyValue];
+    data: [KeyValue] (required);
 }
 
 table Train {
@@ -196,17 +201,27 @@ table Train {
 }
 
 table Status {
-    msg: string;
+    msg: string (required);
 }
 
-table Bind {
-    plan_id: ulong;
-    stop_id: ulong;
+table BindRequest {
+    plan_id: ulong (required);
+    stop_id: ulong (required);
 }
 
-table Unbind {
-    plan_id: ulong;
-    stop_id: ulong;
+table BindResponse {
+    plan_id: ulong (required);
+    stop_id: ulong (required);
+}
+
+table UnbindRequest {
+    plan_id: ulong (required);
+    stop_id: ulong (required);
+}
+
+table UnbindResponse {
+    plan_id: ulong (required);
+    stop_id: ulong (required);
 }
 
 union Payload {
@@ -221,8 +236,8 @@ union Payload {
 
 
 table Message {
-  data: Payload;
-  status: Status;
+  data: Payload (required);
+  status: Status (required);
 }
 
 root_type Message;
