@@ -173,7 +173,7 @@ table Float {
 }
 
 table ValueWrapper {
-    data: Value;
+    data: Value (required);
 }
 
 table List {
@@ -190,7 +190,7 @@ table Document {
 }
 
 table Train {
-    values: [ValueWrapper];
+    values: [ValueWrapper] (required);
     topic: string;
     event_time: Time;
 }
