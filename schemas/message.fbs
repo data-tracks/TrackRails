@@ -96,24 +96,24 @@ table KeyValueStringTransform {
 }
 
 table Source {
-    id: ulong (required);
+    id: ulong;
     name: string (required);
     type: string (required);
 }
 
 table Destination {
-    id: ulong (required);
+    id: ulong;
     name: string (required);
     type: string (required);
 }
 
 table KeyValueU64Source {
-  key: ulong (required);
+  key: ulong;
   value: Source (required);
 }
 
 table KeyValueU64Destination {
-  key: ulong (required);
+  key: ulong;
   value: Destination (required);
 }
 
@@ -158,11 +158,11 @@ union Value {
 table Null {}
 
 table Time {
-    data: long (required);
+    data: long;
 }
 
 table Bool {
-    data: bool (required);
+    data: bool;
 }
 
 table Text {
@@ -170,11 +170,11 @@ table Text {
 }
 
 table Integer {
-    data: long (required);
+    data: long;
 }
 
 table Float {
-    data: float (required);
+    data: float;
 }
 
 table ValueWrapper {
@@ -205,23 +205,23 @@ table Status {
 }
 
 table BindRequest {
-    plan_id: ulong (required);
-    stop_id: ulong (required);
+    plan_id: ulong;
+    stop_id: ulong;
 }
 
 table BindResponse {
-    plan_id: ulong (required);
-    stop_id: ulong (required);
+    plan_id: ulong;
+    stop_id: ulong;
 }
 
 table UnbindRequest {
-    plan_id: ulong (required);
-    stop_id: ulong (required);
+    plan_id: ulong;
+    stop_id: ulong;
 }
 
 table UnbindResponse {
-    plan_id: ulong (required);
-    stop_id: ulong (required);
+    plan_id: ulong;
+    stop_id: ulong;
 }
 
 union Payload {
