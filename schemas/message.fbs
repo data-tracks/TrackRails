@@ -4,7 +4,7 @@ union CreateType {
 }
 
 table Register{
-    id: long = null;
+    id: ulong = null;
     catalog: Catalog;
 }
 
@@ -57,8 +57,8 @@ table Catalog{
 
 
 table Station {
-  id:ulong;
-  stop:ulong;
+  id: ulong;
+  stop: ulong;
   transform: Transform;
   block: [ulong];
   inputs: [ulong];
@@ -74,19 +74,19 @@ union TransformType{
 }
 
 table Transform {
-  name:string;
+  name: string;
   type: TransformType;
 }
 
 
 table KeyValueU64VecU64 {
-  key:ulong;
-  value:[ulong];
+  key: ulong;
+  value: [ulong];
 }
 
 table KeyValueU64Station {
-  key:ulong;
-  value:Station;
+  key: ulong;
+  value: Station;
 }
 
 
@@ -124,19 +124,19 @@ enum PlanStatus : byte {
 }
 
 table Plan {
-  id:ulong;
-  name:string;
-  template:string;
+  id: ulong;
+  name: string;
+  template: string;
 
-  lines:[KeyValueU64VecU64];
-  stations:[KeyValueU64Station];
-  stations_to_in_outs:[KeyValueU64VecU64];
+  lines: [KeyValueU64VecU64];
+  stations: [KeyValueU64Station];
+  stations_to_in_outs: [KeyValueU64VecU64];
 
   sources: [KeyValueU64Source];
   destinations: [KeyValueU64Destination];
 
-  status:PlanStatus;
-  transforms:[KeyValueStringTransform];
+  status: PlanStatus;
+  transforms: [KeyValueStringTransform];
 }
 
 
@@ -229,9 +229,12 @@ union Payload {
     Get,
     Train,
     Catalog,
-    Register,
-    Bind,
-    Unbind
+    RegisterRequest,
+    RegisterResponse,
+    BindRequest,
+    BindResponse,
+    UnbindRequest,
+    UnbindRespones
 }
 
 
