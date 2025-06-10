@@ -3,7 +3,12 @@ union CreateType {
     CreatePlanRequest
 }
 
-table Register{
+table RegisterResponse{
+    id: ulong = null;
+    catalog: Catalog;
+}
+
+table RegisterRequest{
     id: ulong = null;
     catalog: Catalog;
 }
