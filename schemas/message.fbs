@@ -205,8 +205,16 @@ table Train {
     event_time: Time;
 }
 
-table Status {
+table ErrorStatus {
+    code: uint;
     msg: string (required);
+}
+
+table OkStatus {}
+
+union Status {
+    OkStatus,
+    ErrorStatus
 }
 
 table BindRequest {
