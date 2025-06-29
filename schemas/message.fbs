@@ -1,8 +1,259 @@
 namespace protocol;
+union CreateType {
+    CreatePlanRequest
+}
+
+table RegisterResponse{
+    id: ulong = null;
+    catalog: Catalog;
+}
+
+table RegisterRequest{
+    id: ulong = null;
+    catalog: Catalog;
+}
+
+table Create {
+    create_type: CreateType;
+}
+
+table CreatePlanRequest {
+    name: string;
+    plan: string;
+}
+
+table CreatePlanResponse {
+    name: string;
+    plan: string;
+}
+
+table ByName {
+    name: string;
+}
+
+union FilterType {
+    ByName,
+}
+
+table Filter {
+    filter_type: FilterType;
+}
+
+table GetPlans {
+    name: Filter;
+}
+
+table GetPlan {
+    id: ulong;
+}
+
+union GetType {
+    GetPlans,
+    GetPlan
+}
+
+table Get {
+    get_type: GetType;
+}
+
+table Catalog{
+    plans: Plans;
+}
+
+
+table Station {
+  id: ulong;
+  stop: ulong;
+  transform: Transform;
+  block: [ulong];
+  inputs: [ulong];
+}
+
+table LanguageTransform {
+    language: string;
+    query: string;
+}
+
+union TransformType{
+    LanguageTransform
+}
+
+table Transform {
+  name: string;
+  type: TransformType;
+}
+
+
+table KeyValueU64VecU64 {
+  key: ulong;
+  value: [ulong];
+}
+
+table KeyValueU64Station {
+  key: ulong;
+  value: Station;
+}
+
+
+table KeyValueStringTransform {
+  key: string (required);
+  value: Transform (required);
+}
+
+table Source {
+    id: ulong;
+    name: string (required);
+    type: string (required);
+}
+
+table Destination {
+    id: ulong;
+    name: string (required);
+    type: string (required);
+}
+
+table KeyValueU64Source {
+  key: ulong;
+  value: Source (required);
+}
+
+table KeyValueU64Destination {
+  key: ulong;
+  value: Destination (required);
+}
+
+enum PlanStatus : byte {
+  Running,
+  Stopped,
+  Error
+}
+
+table Plan {
+  id: ulong;
+  name: string;
+  template: string;
+
+  lines: [KeyValueU64VecU64];
+  stations: [KeyValueU64Station];
+  stations_to_in_outs: [KeyValueU64VecU64];
+
+  sources: [KeyValueU64Source];
+  destinations: [KeyValueU64Destination];
+
+  status: PlanStatus;
+  transforms: [KeyValueStringTransform];
+}
+
+
+table Plans {
+    plans: [Plan] (required);
+}
+
+union Value {
+    Null,
+    Text,
+    Bool,
+    Integer,
+    Float,
+    List,
+    Document,
+    Time
+}
+
+table Null {}
+
+table Time {
+    data: long;
+}
+
+table Bool {
+    data: bool;
+}
+
+table Text {
+    data: string (required);
+}
+
+table Integer {
+    data: long;
+}
+
+table Float {
+    data: float;
+}
+
+table ValueWrapper {
+    data: Value (required);
+}
+
+table List {
+    data: [ValueWrapper] (required);
+}
+
+table KeyValue {
+    key: Value (required);
+    values: Value (required);
+}
+
+table Document {
+    data: [KeyValue] (required);
+}
+
+table Train {
+    values: [ValueWrapper] (required);
+    topic: string;
+    event_time: Time;
+}
+
+table ErrorStatus {
+    code: uint;
+    msg: string (required);
+}
+
+table OkStatus {}
+
+union Status {
+    OkStatus,
+    ErrorStatus
+}
+
+table BindRequest {
+    plan_id: ulong;
+    stop_id: ulong;
+}
+
+table BindResponse {
+    plan_id: ulong;
+    stop_id: ulong;
+}
+
+table UnbindRequest {
+    plan_id: ulong;
+    stop_id: ulong;
+}
+
+table UnbindResponse {
+    plan_id: ulong;
+    stop_id: ulong;
+}
+
+union Payload {
+    Create,
+    Get,
+    Train,
+    Catalog,
+    RegisterRequest,
+    RegisterResponse,
+    BindRequest,
+    BindResponse,
+    UnbindRequest,
+    UnbindResponse
+}
+
 
 table Message {
-  action: string;
-  data: string;
+  data: Payload (required);
+  status: Status (required);
 }
 
 root_type Message;

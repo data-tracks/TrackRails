@@ -27,27 +27,33 @@ public final class Message extends Table {
   public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
   public Message __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public String action() { int o = __offset(4); return o != 0 ? __string(o + bb_pos) : null; }
-  public ByteBuffer actionAsByteBuffer() { return __vector_as_bytebuffer(4, 1); }
-  public ByteBuffer actionInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 4, 1); }
-  public String data() { int o = __offset(6); return o != 0 ? __string(o + bb_pos) : null; }
-  public ByteBuffer dataAsByteBuffer() { return __vector_as_bytebuffer(6, 1); }
-  public ByteBuffer dataInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 6, 1); }
+  public byte dataType() { int o = __offset(4); return o != 0 ? bb.get(o + bb_pos) : 0; }
+  public Table data(Table obj) { int o = __offset(6); return o != 0 ? __union(obj, o + bb_pos) : null; }
+  public byte statusType() { int o = __offset(8); return o != 0 ? bb.get(o + bb_pos) : 0; }
+  public Table status(Table obj) { int o = __offset(10); return o != 0 ? __union(obj, o + bb_pos) : null; }
 
   public static int createMessage(FlatBufferBuilder builder,
-      int actionOffset,
-      int dataOffset) {
-    builder.startTable(2);
+      byte dataType,
+      int dataOffset,
+      byte statusType,
+      int statusOffset) {
+    builder.startTable(4);
+    Message.addStatus(builder, statusOffset);
     Message.addData(builder, dataOffset);
-    Message.addAction(builder, actionOffset);
+    Message.addStatusType(builder, statusType);
+    Message.addDataType(builder, dataType);
     return Message.endMessage(builder);
   }
 
-  public static void startMessage(FlatBufferBuilder builder) { builder.startTable(2); }
-  public static void addAction(FlatBufferBuilder builder, int actionOffset) { builder.addOffset(0, actionOffset, 0); }
+  public static void startMessage(FlatBufferBuilder builder) { builder.startTable(4); }
+  public static void addDataType(FlatBufferBuilder builder, byte dataType) { builder.addByte(0, dataType, 0); }
   public static void addData(FlatBufferBuilder builder, int dataOffset) { builder.addOffset(1, dataOffset, 0); }
+  public static void addStatusType(FlatBufferBuilder builder, byte statusType) { builder.addByte(2, statusType, 0); }
+  public static void addStatus(FlatBufferBuilder builder, int statusOffset) { builder.addOffset(3, statusOffset, 0); }
   public static int endMessage(FlatBufferBuilder builder) {
     int o = builder.endTable();
+    builder.required(o, 6);  // data
+    builder.required(o, 10);  // status
     return o;
   }
   public static void finishMessageBuffer(FlatBufferBuilder builder, int offset) { builder.finish(offset); }

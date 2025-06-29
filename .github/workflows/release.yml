@@ -3,6 +3,9 @@ permissions:
   "contents": "write"
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       version:
@@ -31,18 +34,66 @@ jobs:
         run: |
           mkdir -p generated/java
           flatc --java -o generated/java schemas/*.fbs
+          
+
+      - name: Generate TypeScript code from FlatBuffers
+        run: |
+          mkdir -p generated/ts/src
+          flatc --ts -o generated/ts/src/ schemas/*.fbs
+
+      - name: Create package.json
+        run: |
+          cat <<EOL > package.json
+          {
+            "name": "trackrails",
+            "version": "1.0.0",
+            "description": "TrackRails TypeScript for DataTracks",
+            "main": "generated/ts/src/protocol.ts",
+            "types": "generated/ts/src/protocol.ts",
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/data-tracks/TrackRails.git"
+            },
+            "license": "GPLv3"
+          }
 
       - name: Generate Rust code from FlatBuffers
         run: |
-          mkdir -p generated/rust
-          flatc --rust -o generated/rust schemas/*.fbs
+          mkdir -p generated/rust/src
+          flatc --rust -o generated/rust/src/ schemas/*.fbs
+
+      - name: Create Cargo.toml for Rust Code
+        run: |
+          cat <<EOL > generated/rust/Cargo.toml
+          [package]
+          name = "schemas"
+          version = "0.0.1"
+          edition = "2021"
+
+          [dependencies]
+          flatbuffers = "25.2.10"
+          
+          [lib]
+          path = "src/lib.rs" 
+
+          [build-dependencies]
+          flatbuffers = "25.2.10"
+          EOL
+
+      - name: Create lib.rs for Rust code
+        run: |
+          mkdir -p generated/rust/src
+          cat <<EOL > generated/rust/src/lib.rs
+          pub mod message_generated;
+          EOL
 
       - name: Commit generated code
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
           git add generated/
-          git commit -m "Update generated code to version ${GITHUB_EVENT_INPUTS_VERSION}"
+          git add package.json
+          git commit -m "Update generated code ${GITHUB_EVENT_INPUTS_VERSION}"
 
       - name: Push generated code to branch
         run: |
