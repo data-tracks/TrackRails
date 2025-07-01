@@ -77,7 +77,7 @@ jobs:
           echo "Attempting to fetch current version of '$PACKAGE_NAME' from crates.io..."
           # Fetch package information from crates.io API
           # We use -s for silent, -f for fail on errors, and jq to parse the JSON
-          CRATES_IO_RESPONSE=$(curl -sSf "https://crates.io/api/v1/crates/$PACKAGE_NAME")
+          CRATES_IO_RESPONSE=$(curl -sSf -H "User-Agent: GitHubActions/1.0 (https://github.com/data-tracks/TrackRails)" "https://crates.io/api/v1/crates/$PACKAGE_NAME")
       
           if [ $? -eq 0 ] && [ -n "$CRATES_IO_RESPONSE" ]; then
           # Extract the max_version from the JSON response
