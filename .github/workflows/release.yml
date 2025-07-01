@@ -62,11 +62,55 @@ jobs:
           mkdir -p generated/rust/src
           flatc --rust -o generated/rust/src/ schemas/*.fbs
 
-      - name: Create Cargo.toml for Rust Code
+      - name: Create Cargo.toml and increment version for Rust Code
         run: |
+          # Define the path to the Cargo.toml file
+          CARGO_TOML_PATH="generated/rust/Cargo.toml"
+          PACKAGE_NAME="track_rails"
+      
+          # Ensure the directory exists for the generated file
+          mkdir -p "$(dirname "$CARGO_TOML_PATH")"
+      
+          # --- Determine the current version from crates.io ---
+          CURRENT_VERSION="0.0.0" # Default starting version if API call fails or version not found
+      
+          echo "Attempting to fetch current version of '$PACKAGE_NAME' from crates.io..."
+          # Fetch package information from crates.io API
+          # We use -s for silent, -f for fail on errors, and jq to parse the JSON
+          CRATES_IO_RESPONSE=$(curl -sSf "https://crates.io/api/v1/crates/$PACKAGE_NAME")
+      
+          if [ $? -eq 0 ] && [ -n "$CRATES_IO_RESPONSE" ]; then
+          # Extract the max_version from the JSON response
+          # Note: 'max_version' is the latest published version on crates.io
+          FETCHED_VERSION=$(echo "$CRATES_IO_RESPONSE" | jq -r '.crate.max_version')
+          
+          if [ -n "$FETCHED_VERSION" ] && [[ "$FETCHED_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          CURRENT_VERSION="$FETCHED_VERSION"
+          echo "Found current version on crates.io: $CURRENT_VERSION"
+          else
+          echo "Warning: Could not extract a valid version from crates.io response or response was empty. Using default 0.0.0"
+          echo "crates.io response: $CRATES_IO_RESPONSE"
+          fi
+          else
+          echo "Error fetching package info from crates.io for '$PACKAGE_NAME'. Using default 0.0.0"
+          echo "Curl exit code: $?"
+          fi
+      
+          # --- Increment the version ---
+          # Split the version string into major, minor, and patch components
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+      
+          # Increment the patch version
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="${MAJOR}.${MINOR}.${NEW_PATCH}"
+      
+          echo "New version will be: $NEW_VERSION"
+      
+      
+          ## Create Cargo 
           cat <<EOL > generated/rust/Cargo.toml
           [package]
-          name = "track_rails"
+          name = "track-rails"
           version = "0.0.1"
           authors = ["David Lengweiler <dave.lengw@gmail.com>"]
           description = "Rust Version of TrackRails Protocol."
