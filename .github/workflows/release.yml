@@ -87,6 +87,14 @@ jobs:
           [build-dependencies]
           flatbuffers = "25.2.10"
           EOL
+      - name: Create Cargo.toml for Rust Code
+        run: |
+          cat <<EOL > generated/rust/README.md
+          # 🚂 TrackRails 
+          ## DataTracks Communication Protocol 
+  
+          This crate contains the communication protocol for **DataTracks** using **FlatBuffers** for fast, efficient, and cross-platform data serialization.
+          EOL
 
       - name: Create lib.rs for Rust code
         run: |
