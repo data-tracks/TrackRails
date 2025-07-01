@@ -20,11 +20,11 @@ jobs:
         run: |
           cd generated/rust
           cargo build -r
-      - name: "Package for crates.io"
+      - name: "📦 Package for crates.io"
         run: |
           cd generated/rust
           cargo package # publishes a package as a tarball
-      - name: "Publish to crates.io"
+      - name: "📢 Publish to crates.io"
         run: |
           cd generated/rust
           cargo publish # publishes your crate as a library that can be added as a
