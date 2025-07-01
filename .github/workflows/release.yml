@@ -75,6 +75,7 @@ jobs:
           
           [lib]
           path = "src/lib.rs" 
+          version = "0.0.1"
 
           [build-dependencies]
           flatbuffers = "25.2.10"
