@@ -1,4 +1,4 @@
-name: 📦 Publish cargio.io
+name: 📦 Publish cargo.io
 on:
   workflow_run:
     workflows: ["📜 Protocol Release"]
