@@ -73,7 +73,7 @@ jobs:
           homepage = "https://github.com/data-tracks/TrackRails"
           repository = "https://github.com/data-tracks/TrackRails"
           keywords = ["stream", "data", "processing", "protocol"]
-          license = "GPL-3"
+          license = "GPL-3.0-only"
           edition = "2024"
           readme = "README.md"
 
