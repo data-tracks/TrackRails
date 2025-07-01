@@ -1,8 +1,9 @@
-name: Publish cargio.io
+name: 📦 Publish cargio.io
 on:
-  workflow_dispatch:
-  release:
-    types: [created]
+  workflow_run:
+    workflows: ["📜 Protocol Release"]
+    types:
+      - completed
 
 jobs:
   build:
@@ -11,11 +12,19 @@ jobs:
       release_built: ${{ steps.set-output.outputs.release_built }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: "generated"
       - name: Login into crates.io
         run: cargo login ${{ secrets.CRATES_IO }}
       - name: Build binaries in "release" mode
-        run: cargo build -r
+        run: |
+          cd generated/rust
+          cargo build -r
       - name: "Package for crates.io"
-        run: cargo package # publishes a package as a tarball
+        run: |
+          cd generated/rust
+          cargo package # publishes a package as a tarball
       - name: "Publish to crates.io"
-        run: cargo publish # publishes your crate as a library that can be added as a
+        run: |
+          cd generated/rust
+          cargo publish # publishes your crate as a library that can be added as a
