@@ -76,7 +76,7 @@ jobs:
           cat <<EOL > generated/rust/Cargo.toml
           [package]
           name = "track-rails"
-          version = $VERSION_NUMBER
+          version = "$VERSION_NUMBER"
           authors = ["David Lengweiler <dave.lengw@gmail.com>"]
           description = "Rust Version of TrackRails Protocol."
           homepage = "https://github.com/data-tracks/TrackRails"
@@ -91,7 +91,7 @@ jobs:
           
           [lib]
           path = "src/lib.rs" 
-          version = $VERSION_NUMBER
+          version = "$VERSION_NUMBER"
 
           [build-dependencies]
           flatbuffers = "25.2.10"
