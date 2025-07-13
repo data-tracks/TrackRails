@@ -5,6 +5,7 @@ union CreateType {
 
 table RegisterResponse{
     id: ulong = null;
+    permissions: [string];
     catalog: Catalog;
 }
 
