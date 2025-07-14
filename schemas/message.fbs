@@ -3,6 +3,10 @@ union CreateType {
     CreatePlanRequest
 }
 
+table Disconnect{
+    id: ulong;
+}
+
 table RegisterResponse{
     id: ulong = null;
     permissions: [string];
@@ -248,7 +252,8 @@ union Payload {
     BindRequest,
     BindResponse,
     UnbindRequest,
-    UnbindResponse
+    UnbindResponse,
+    Disconnect
 }
 
 
