@@ -147,7 +147,6 @@ table Plan {
   transforms: [KeyValueStringTransform];
 }
 
-
 table Plans {
     plans: [Plan] (required);
 }
@@ -175,8 +174,7 @@ table CreatePlanRequest {
 }
 
 table CreatePlanResponse {
-    name: string;
-    plan: string;
+    id: ulong;
 }
 
 table ByName {
