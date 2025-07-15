@@ -39,13 +39,13 @@ jobs:
       - name: Generate Java code from FlatBuffers
         run: |
           mkdir -p generated/java
-          flatc --java -o generated/java schemas/message.fbs
+          flatc --java -o generated/java schemas/*.fbs
           
 
       - name: Generate TypeScript code from FlatBuffers
         run: |
           mkdir -p generated/ts/src
-          flatc --ts -o generated/ts/src/ schemas/message.fbs
+          flatc --ts -o generated/ts/src/ schemas/*.fbs
 
       - name: Create package.json
         run: |
@@ -67,9 +67,9 @@ jobs:
       - name: Generate Rust code from FlatBuffers
         run: |
           mkdir -p generated/rust/src
-          flatc --rust -o generated/rust/src/ schemas/message.fbs
+          flatc --rust -o generated/rust/src/ schemas/*.fbs
 
-      - name: Create Cargo.toml and increment version for Rust Code
+      - name: Create Cargo.toml
         run: |
           VERSION_NUMBER="${{ steps.get_version.outputs.VERSION }}"
           ## Create Cargo 
