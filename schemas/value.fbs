@@ -1,0 +1,57 @@
+namespace protocol;
+
+union Value {
+    Null,
+    Text,
+    Bool,
+    Integer,
+    Float,
+    List,
+    Document,
+    Time
+}
+
+table Null {}
+
+table Time {
+    data: long;
+}
+
+table Bool {
+    data: bool;
+}
+
+table Text {
+    data: string (required);
+}
+
+table Integer {
+    data: long;
+}
+
+table Float {
+    data: float;
+}
+
+table ValueWrapper {
+    data: Value (required);
+}
+
+table List {
+    data: [ValueWrapper] (required);
+}
+
+table KeyValue {
+    key: Value (required);
+    values: Value (required);
+}
+
+table Document {
+    data: [KeyValue] (required);
+}
+
+table Train {
+    values: [ValueWrapper] (required);
+    topic: string;
+    event_time: Time;
+}

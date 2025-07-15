@@ -1,7 +1,7 @@
+include "value.fbs";
+include "catalog.fbs";
+
 namespace protocol;
-union CreateType {
-    CreatePlanRequest
-}
 
 table Disconnect{
     id: ulong;
@@ -16,10 +16,6 @@ table RegisterResponse{
 table RegisterRequest{
     id: ulong = null;
     catalog: Catalog;
-}
-
-table Create {
-    create_type: CreateType;
 }
 
 table CreatePlanRequest {
@@ -44,170 +40,12 @@ table Filter {
     filter_type: FilterType;
 }
 
-table GetPlans {
+table GetPlansRequest {
     name: Filter;
 }
 
-table GetPlan {
+table GetPlanRequest {
     id: ulong;
-}
-
-union GetType {
-    GetPlans,
-    GetPlan
-}
-
-table Get {
-    get_type: GetType;
-}
-
-table Catalog{
-    plans: Plans;
-}
-
-
-table Station {
-  id: ulong;
-  stop: ulong;
-  transform: Transform;
-  block: [ulong];
-  inputs: [ulong];
-}
-
-table LanguageTransform {
-    language: string;
-    query: string;
-}
-
-union TransformType{
-    LanguageTransform
-}
-
-table Transform {
-  name: string;
-  type: TransformType;
-}
-
-
-table KeyValueU64VecU64 {
-  key: ulong;
-  value: [ulong];
-}
-
-table KeyValueU64Station {
-  key: ulong;
-  value: Station;
-}
-
-
-table KeyValueStringTransform {
-  key: string (required);
-  value: Transform (required);
-}
-
-table Source {
-    id: ulong;
-    name: string (required);
-    type: string (required);
-}
-
-table Destination {
-    id: ulong;
-    name: string (required);
-    type: string (required);
-}
-
-table KeyValueU64Source {
-  key: ulong;
-  value: Source (required);
-}
-
-table KeyValueU64Destination {
-  key: ulong;
-  value: Destination (required);
-}
-
-enum PlanStatus : byte {
-  Running,
-  Stopped,
-  Error
-}
-
-table Plan {
-  id: ulong;
-  name: string;
-  template: string;
-
-  lines: [KeyValueU64VecU64];
-  stations: [KeyValueU64Station];
-  stations_to_in_outs: [KeyValueU64VecU64];
-
-  sources: [KeyValueU64Source];
-  destinations: [KeyValueU64Destination];
-
-  status: PlanStatus;
-  transforms: [KeyValueStringTransform];
-}
-
-
-table Plans {
-    plans: [Plan] (required);
-}
-
-union Value {
-    Null,
-    Text,
-    Bool,
-    Integer,
-    Float,
-    List,
-    Document,
-    Time
-}
-
-table Null {}
-
-table Time {
-    data: long;
-}
-
-table Bool {
-    data: bool;
-}
-
-table Text {
-    data: string (required);
-}
-
-table Integer {
-    data: long;
-}
-
-table Float {
-    data: float;
-}
-
-table ValueWrapper {
-    data: Value (required);
-}
-
-table List {
-    data: [ValueWrapper] (required);
-}
-
-table KeyValue {
-    key: Value (required);
-    values: Value (required);
-}
-
-table Document {
-    data: [KeyValue] (required);
-}
-
-table Train {
-    values: [ValueWrapper] (required);
-    topic: string;
-    event_time: Time;
 }
 
 table ErrorStatus {
@@ -243,8 +81,10 @@ table UnbindResponse {
 }
 
 union Payload {
-    Create,
-    Get,
+    CreatePlanRequest,
+    CreatePlanResponse,
+    GetPlanRequest,
+    GetPlansRequest,
     Train,
     Catalog,
     RegisterRequest,
