@@ -28,7 +28,7 @@ jobs:
       - name: Install flatc
         uses: Nugine/setup-flatc@v1
         with:
-          version: "24.3.25"
+          version: "25.2.10"
 
       - name: Read version from file
         id: get_version
