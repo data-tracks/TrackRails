@@ -217,6 +217,22 @@ union Status {
     ErrorStatus
 }
 
+table StartPlanRequest {
+    id: ulong;
+}
+
+table StartPlanResponse {
+    already_running: bool;
+}
+
+table StopPlanRequest {
+    id: ulong;
+}
+
+table StopPlanResponse {
+    already_stopped: bool;
+}
+
 table BindRequest {
     plan_id: ulong;
     stop_id: ulong;
@@ -242,6 +258,10 @@ union Payload {
     CreatePlanResponse,
     DeletePlanRequest,
     DeletePlanResponse,
+    StartPlanRequest,
+    StartPlanResponse,
+    StopPlanRequest,
+    StopPlanResponse,
     GetPlanRequest,
     GetPlansRequest,
     Train,
