@@ -177,6 +177,14 @@ table CreatePlanResponse {
     id: ulong;
 }
 
+table DeletePlanRequest {
+    id: ulong;
+}
+
+table DeletePlanResponse {
+}
+
+
 table ByName {
     name: string;
 }
@@ -232,6 +240,8 @@ table UnbindResponse {
 union Payload {
     CreatePlanRequest,
     CreatePlanResponse,
+    DeletePlanRequest,
+    DeletePlanResponse,
     GetPlanRequest,
     GetPlansRequest,
     Train,
