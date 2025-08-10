@@ -1,61 +1,64 @@
 namespace protocol;
-union CreateType {
-    CreatePlanRequest
+
+// Value
+
+union Value {
+    Null,
+    Text,
+    Bool,
+    Integer,
+    Float,
+    List,
+    Document,
+    Time
 }
 
-table RegisterResponse{
-    id: ulong = null;
-    catalog: Catalog;
+table Null {}
+
+table Time {
+    data: long;
 }
 
-table RegisterRequest{
-    id: ulong = null;
-    catalog: Catalog;
+table Bool {
+    data: bool;
 }
 
-table Create {
-    create_type: CreateType;
+table Text {
+    data: string (required);
 }
 
-table CreatePlanRequest {
-    name: string;
-    plan: string;
+table Integer {
+    data: long;
 }
 
-table CreatePlanResponse {
-    name: string;
-    plan: string;
+table Float {
+    data: float;
 }
 
-table ByName {
-    name: string;
+table ValueWrapper {
+    data: Value (required);
 }
 
-union FilterType {
-    ByName,
+table List {
+    data: [ValueWrapper] (required);
 }
 
-table Filter {
-    filter_type: FilterType;
+table KeyValue {
+    key: Value (required);
+    values: Value (required);
 }
 
-table GetPlans {
-    name: Filter;
+table Document {
+    data: [KeyValue] (required);
 }
 
-table GetPlan {
-    id: ulong;
+table Train {
+    values: [ValueWrapper] (required);
+    topic: string;
+    event_time: Time;
 }
 
-union GetType {
-    GetPlans,
-    GetPlan
-}
-
-table Get {
-    get_type: GetType;
-}
-
+// Catalog
 table Catalog{
     plans: Plans;
 }
@@ -144,9 +147,13 @@ table Plan {
   transforms: [KeyValueStringTransform];
 }
 
-
 table Plans {
     plans: [Plan] (required);
+}
+
+
+table Disconnect{
+    id: ulong;
 }
 
 union Value {
@@ -161,7 +168,11 @@ union Value {
     EventWrapper
 }
 
-table Null {}
+table RegisterResponse{
+    id: ulong = null;
+    permissions: [string];
+    catalog: Catalog;
+}
 
 table EventWrapper {
     event: Event;
@@ -186,47 +197,46 @@ table Update {
     identity: ValueWrapper;
 }
 
-table Time {
-    data: long;
+table RegisterRequest{
+    id: ulong = null;
+    catalog: Catalog;
 }
 
-table Bool {
-    data: bool;
+table CreatePlanRequest {
+    name: string;
+    plan: string;
 }
 
-table Text {
-    data: string (required);
+table CreatePlanResponse {
+    id: ulong;
 }
 
-table Integer {
-    data: long;
+table DeletePlanRequest {
+    id: ulong;
 }
 
-table Float {
-    data: float;
+table DeletePlanResponse {
 }
 
-table ValueWrapper {
-    data: Value (required);
+
+table ByName {
+    name: string;
 }
 
-table List {
-    data: [ValueWrapper] (required);
+union FilterType {
+    ByName,
 }
 
-table KeyValue {
-    key: Value (required);
-    values: Value (required);
+table Filter {
+    filter_type: FilterType;
 }
 
-table Document {
-    data: [KeyValue] (required);
+table GetPlansRequest {
+    name: Filter;
 }
 
-table Train {
-    values: [ValueWrapper] (required);
-    topic: string;
-    event_time: Time;
+table GetPlanRequest {
+    id: ulong;
 }
 
 table ErrorStatus {
@@ -239,6 +249,22 @@ table OkStatus {}
 union Status {
     OkStatus,
     ErrorStatus
+}
+
+table StartPlanRequest {
+    id: ulong;
+}
+
+table StartPlanResponse {
+    already_running: bool;
+}
+
+table StopPlanRequest {
+    id: ulong;
+}
+
+table StopPlanResponse {
+    already_stopped: bool;
 }
 
 table BindRequest {
@@ -262,8 +288,16 @@ table UnbindResponse {
 }
 
 union Payload {
-    Create,
-    Get,
+    CreatePlanRequest,
+    CreatePlanResponse,
+    DeletePlanRequest,
+    DeletePlanResponse,
+    StartPlanRequest,
+    StartPlanResponse,
+    StopPlanRequest,
+    StopPlanResponse,
+    GetPlanRequest,
+    GetPlansRequest,
     Train,
     Catalog,
     RegisterRequest,
@@ -271,7 +305,8 @@ union Payload {
     BindRequest,
     BindResponse,
     UnbindRequest,
-    UnbindResponse
+    UnbindResponse,
+    Disconnect
 }
 
 
