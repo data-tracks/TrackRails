@@ -59,7 +59,7 @@ table Events {
     events: [EventWrapper] (required);
 }
 
-enum ValuesOrEvents {
+union ValuesOrEvents {
     Values,
     Events
 }
