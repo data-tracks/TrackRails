@@ -162,14 +162,14 @@ table RegisterResponse{
     catalog: Catalog;
 }
 
-table EventWrapper {
-    event: Event;
-}
-
 union Event {
     Insert,
     Delete,
     Update,
+}
+
+table EventWrapper {
+    event: Event;
 }
 
 table Insert {
