@@ -9,8 +9,7 @@ union Value {
     Float,
     List,
     Document,
-    Time,
-    EventWrapper
+    Time
 }
 
 table Null {}
@@ -52,8 +51,25 @@ table Document {
     data: [KeyValue] (required);
 }
 
-table Train {
+table Values {
     values: [ValueWrapper] (required);
+}
+
+table Events {
+    events: [EventWrapper] (required);
+}
+
+enum ValuesOrEvents {
+    Values,
+    Events
+}
+
+table TrainContent {
+    data: ValuesOrEvents (required);
+}
+
+table Train {
+    content: TrainContent (required);
     topic: string;
     event_time: Time;
 }
