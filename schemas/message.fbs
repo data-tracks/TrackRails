@@ -157,10 +157,34 @@ union Value {
     Float,
     List,
     Document,
-    Time
+    Time,
+    EventWrapper
 }
 
 table Null {}
+
+table EventWrapper {
+    event: Event;
+}
+
+union Event {
+    Insert,
+    Delete,
+    Update,
+}
+
+table Insert {
+    value: ValueWrapper;
+}
+
+table Delete {
+    identity: ValueWrapper;
+}
+
+table Update {
+    value: ValueWrapper;
+    identity: ValueWrapper;
+}
 
 table Time {
     data: long;
