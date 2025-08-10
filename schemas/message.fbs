@@ -1,7 +1,6 @@
 namespace protocol;
 
 // Value
-
 union Value {
     Null,
     Text,
@@ -10,7 +9,8 @@ union Value {
     Float,
     List,
     Document,
-    Time
+    Time,
+    EventWrapper
 }
 
 table Null {}
@@ -154,18 +154,6 @@ table Plans {
 
 table Disconnect{
     id: ulong;
-}
-
-union Value {
-    Null,
-    Text,
-    Bool,
-    Integer,
-    Float,
-    List,
-    Document,
-    Time,
-    EventWrapper
 }
 
 table RegisterResponse{
