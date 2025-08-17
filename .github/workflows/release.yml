@@ -53,7 +53,7 @@ jobs:
           cat <<EOL > package.json
           {
             "name": "trackrails",
-            "version": $VERSION_NUMBER,
+            "version": "$VERSION_NUMBER",
             "description": "TrackRails TypeScript for DataTracks",
             "main": "generated/ts/src/protocol.ts",
             "types": "generated/ts/src/protocol.ts",
