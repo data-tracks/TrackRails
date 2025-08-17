@@ -1,0 +1,21 @@
+[package]
+name = "track-rails"
+version = "0.1.2"
+authors = ["David Lengweiler <dave.lengw@gmail.com>"]
+description = "Rust Version of TrackRails Protocol."
+homepage = "https://github.com/data-tracks/TrackRails"
+repository = "https://github.com/data-tracks/TrackRails"
+keywords = ["stream", "data", "processing", "protocol"]
+license = "GPL-3.0-only"
+edition = "2024"
+readme = "README.md"
+
+[dependencies]
+flatbuffers = "25.2.10"
+
+[lib]
+path = "src/lib.rs" 
+version = "0.1.2"
+
+[build-dependencies]
+flatbuffers = "25.2.10"
